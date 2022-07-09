@@ -1,4 +1,4 @@
-# NetConstruct React Developer Assessment
+# React Developer Assessment
 
 ## Overview
 
