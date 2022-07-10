@@ -1,9 +1,14 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom"
+import Layout from "./Layout";
+
 const App: React.FC = () => {
   return (
-    <div>
-      {/* Complete the exercise here. */}
-      Hello World
-    </div>
+    <BrowserRouter basename="/">
+      <Routes>
+        <Route path="/*" element={<Layout />} />
+      </Routes>
+    </BrowserRouter>
+
   );
 };
 
