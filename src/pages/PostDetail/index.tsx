@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLocation } from 'react-router';
+import { Link } from 'react-router-dom';
 import postsJson from "../../mock/data.json";
 
 function PostDetail() {
@@ -17,7 +18,10 @@ function PostDetail() {
           <b>Publish Year:</b> {post && new Date(post.publishDate).getFullYear()}
         </p>
         <b>Category:</b> {post?.categories.map(category => (
-          <u className="card-text">{category.name} | </u>
+          <u className="card-text">
+            <Link to={`/posts?category=${category.name}`}>
+              {category.name}
+            </Link> | </u>
         ))}
       </div>
     </>
