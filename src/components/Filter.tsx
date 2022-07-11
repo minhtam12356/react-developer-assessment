@@ -1,18 +1,24 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router';
+import { useSearchParams } from 'react-router-dom';
 
 export interface FilterProps {
     filterItems: string[],
-    onChangeFilter: (item: string) => void,
 }
 
-function Filter({ filterItems, onChangeFilter }: FilterProps) {
-    const [filter, setFilter] = useState<string>('All')
+const ALL = "All";
+
+function Filter({ filterItems }: FilterProps) {
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [filter, setFilter] = useState<string>(searchParams.get('category') || ALL)
+    const navigate = useNavigate();
     const onClickItem = (e: any) => {
-        onChangeFilter(e.target.innerText);
-        setFilter(e.target.innerText);
+        const value = e.target.innerText;
+        setFilter(value);
+        value !== ALL ? navigate(`/posts?category=${value}`) : navigate("/posts");
     }
     return (
-        <div className="btn-group">
+        <div className="btn-group mx-3">
             <button type="button" className="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {filter}
             </button>

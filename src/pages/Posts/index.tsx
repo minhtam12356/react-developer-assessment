@@ -1,23 +1,35 @@
 import useCategory from '../../hook/useCategory';
-import React, { useState } from 'react';
-import { IPosts } from '../../types/post';
+import React, { useEffect, useState } from 'react';
+import { IPost } from '../../types/post';
 import { Post, ListPost } from './style';
 import postsJson from "../../mock/data.json";
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import Filter from '../../components/Filter';
+import InfiniteScrollComponent from '../../components/InfiniteScrollComponent';
 
 function Posts() {
-    const [posts, setPosts] = useState<IPosts>(postsJson);
+    const [posts, setPosts] = useState<IPost[]>(postsJson.posts);
     const { categories } = useCategory();
-    const onChangeFilter = (item: string) => {
-        console.log('item:', item)
-    }
+    const [searchParams] = useSearchParams();
+    useEffect(() => {
+        if (searchParams.get('category')) {
+            const categoryQuery = searchParams.get('category');
+            const result = postsJson.posts.filter(
+                post => post.categories.filter(
+                    category => category.name === categoryQuery
+                ).length)
+            setPosts(result);
+        }
+        else {
+            setPosts(postsJson.posts);
+        }
+    }, [searchParams])
     return (
-        <div className='container'>
+        <div>
             <h2>Posts</h2>
-            <span>Filter:</span><Filter filterItems={categories} onChangeFilter={onChangeFilter}/>
-            <ListPost>
-                {posts.posts.map((post, index) =>
+            <span>Filter:</span><Filter filterItems={categories} /><span>Founded {posts.length} result</span>
+            {/* <ListPost> */}
+                {/* {posts.map((post, index) =>
                     <Post className="card" key={index}>
                         <img src={post.author.avatar} className="card-img-top" alt={post.author.name} />
                         <div className="card-body">
@@ -26,9 +38,10 @@ function Posts() {
                             <Link to={`/posts/${post.id}`} className="btn btn-primary">Detail</Link>
                         </div>
                     </Post>)
-                }
-            </ListPost>
-        </div>   
+                } */}
+                <InfiniteScrollComponent totalItems={posts.length} dataJson={posts} itemOneTimeLoad={10} />
+            {/* </ListPost> */}
+        </div>
     )
 }
 

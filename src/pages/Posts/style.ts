@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
-export const Post = styled.div`
-  width: 30%;
-  margin-bottom: 3rem;
+export const Post = styled.span`
+  width: 31%;
+  margin: 1rem 0.5rem 3rem 0.5rem;
   @media (max-width: 768px) {
     width: 100%;
   }
@@ -11,6 +11,4 @@ export const Post = styled.div`
 export const ListPost = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between; 
-  margin-top: 1rem;
 `

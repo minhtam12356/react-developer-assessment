@@ -7,7 +7,20 @@ function PostDetail() {
   const id = pathname.split('/')[2];
   const post = postsJson.posts.find(post => post.id === id);
   return (
-    <div className='w-25 p-3'>{post?.id}</div>
+    <>
+      <img src={post?.author.avatar} alt={post?.author.name} />
+      <div className="card-body">
+        <h3 className="card-title my-3">Name: {post?.author.name}</h3>
+        <p className="card-text"><b>Title:</b> {post?.title}</p>
+        <p className="card-text"><b>Summary:</b> {post?.summary}</p>
+        <p className="card-text">
+          <b>Publish Year:</b> {post && new Date(post.publishDate).getFullYear()}
+        </p>
+        <b>Category:</b> {post?.categories.map(category => (
+          <u className="card-text">{category.name} | </u>
+        ))}
+      </div>
+    </>
   )
 }
 

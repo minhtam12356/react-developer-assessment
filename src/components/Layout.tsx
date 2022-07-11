@@ -6,11 +6,13 @@ import NavBar from "./NavBar";
 const Layout: React.FC = () => {
     return (<>
         <NavBar />
-        <Routes>
-            <Route path="/" element={<Navigate to="/posts" />} />
-            <Route path="/posts" element={<Posts />} />
-            <Route path="/posts/:id" element={<PostDetail />} />
-        </Routes>
+        <div className="mt-10 container">
+            <Routes>
+                <Route path="/" element={<Navigate to="/posts" />} />
+                <Route path="/posts" element={<Posts />} />
+                <Route path="/posts/:id" element={<PostDetail />} />
+            </Routes>
+        </div>
     </>
     );
 };
